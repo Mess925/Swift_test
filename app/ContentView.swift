@@ -1,50 +1,144 @@
-//
-//  ContentView.swift
-//  app
-//
-//  Created by Messs  on 3/6/25.
+////
+////  ContentView.swift
+////  app
+////
+////  Created by Messs  on 3/6/25.
+////
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    var activities = ["Archery", "Baseball", "Basketball", "Bowling", "Boxing", "Cricket", "Curling", "Fencing", "Golf", "Hiking", "Lacrosse", "Rugby", "Squash", "Soccer"]
-    var colors: [Color] = [.blue, .cyan, .gray, .green, .indigo, .mint, .orange, .pink, .purple, .red]
-    @State private var id = 1
+    @State private var showNextView = false
 
-    @State private var selected = "Baseball"
     var body: some View {
-        VStack{
-            Text("Why not try...")
-            VStack{
-                Circle()
-                    .fill(colors.randomElement() ?? .blue)
-                    .padding()
-                    .overlay(
-                        Image(systemName:
-                                "figure.\(selected.lowercased())")
-                        .font(.system(size: 144))
-                        .foregroundColor(.black)
-                )
-                Text("\(selected)")
-                    .font(.title)
+        NavigationStack {
+            VStack {
+                Text("Welcome.....")
+                    .foregroundColor(.red)
+                    .shadow(color: .white.opacity(0.5), radius: 4, x: 5, y: 4)
+                    .bold()
+                    .font(.largeTitle)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            showNextView = true
+                        }
+                    }
             }
-            .transition(.slide)
-            .id(id);
-            Spacer()
-            Button("Try again"){
-                withAnimation(.easeInOut(duration: 1)){
-                    selected = activities.randomElement() ?? "Archery"
-                    id+=1
-                }
-            }.buttonStyle(.borderedProminent)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black)
+            .ignoresSafeArea()
+            .navigationDestination(isPresented: $showNextView) {
+                ViewTwo()
+            }
         }
     }
 }
 
-struct ContentView_Preview: PreviewProvider {
-    static var previews: some View
-    {
-        ContentView();
+struct ViewTwo: View {
+    @State private var navigateToSignUp = false
+    @State private var navigateToLogin = false
+
+    var body: some View {
+        VStack {
+            VStack {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 80, height: 80)
+                    .overlay(
+                        Image(systemName: "figure.run")
+                            .font(.system(size: 40))
+                            .foregroundColor(.white)
+                    )
+                Text("LOGO")
+                    .font(.title2)
+                    .bold()
+            }
+            Spacer()
+            VStack {
+                Button {
+                    navigateToSignUp = true
+                } label: {
+                    Text("Sign Up")
+                        .font(.headline)
+                        .frame(maxWidth: 350, minHeight: 50)
+                        .background(Color.red)
+                        .foregroundColor(.black)
+                        .cornerRadius(30)
+                        .padding(.horizontal)
+                }
+                HStack(alignment: .center) {
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.gray)
+
+                    Text("or")
+                        .padding(.horizontal)
+
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.gray)
+                }
+                .frame(maxWidth: 340, maxHeight: 20)
+                .padding(.horizontal)
+                Button {
+                    navigateToLogin = true
+                } label: {
+                    Text("Log in")
+                        .font(.headline)
+                        .frame(maxWidth: 350, minHeight: 50)
+                        .background(Color.red)
+                        .foregroundColor(.black)
+                        .cornerRadius(30)
+                        .padding(.horizontal)
+                }
+            }
+
+            Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+                .padding()
+                .multilineTextAlignment(.center)
+                .font(.caption)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
+        .navigationDestination(isPresented: $navigateToSignUp) {
+            SignUpView()
+        }
+        .navigationDestination(isPresented: $navigateToLogin) {
+            LoginView()
+        }
     }
 }
+
+
+struct SignUpView: View {
+    var body: some View {
+        Text("Sign Up Page")
+            .font(.largeTitle)
+            .foregroundColor(.red)
+            .background(Color.black)
+            .ignoresSafeArea()
+    }
+}
+
+struct LoginView: View {
+    var body: some View {
+        Text("Log In Page")
+            .font(.largeTitle)
+            .foregroundColor(.red)
+            .background(Color.black)
+            .ignoresSafeArea()
+    }
+}
+
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
+
