@@ -42,6 +42,7 @@ struct ViewTwo: View {
     var body: some View {
         VStack {
             VStack {
+                Spacer().frame(height: 40)
                 Circle()
                     .fill(Color.red)
                     .frame(width: 80, height: 80)
@@ -112,16 +113,85 @@ struct ViewTwo: View {
     }
 }
 
-
 struct SignUpView: View {
     var body: some View {
-        Text("Sign Up Page")
-            .font(.largeTitle)
-            .foregroundColor(.red)
-            .background(Color.black)
-            .ignoresSafeArea()
+        VStack {
+            Spacer().frame(height: 40)
+
+            Rectangle()
+                .fill(Color.red)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .cornerRadius(30)
+                .shadow(radius: 10)
+                .overlay(
+                    VStack {
+                        Spacer().frame(height: 200)
+                        Button(action: {
+                        }) {
+                            Text("E-Mail")
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.white)
+                                .foregroundColor(.blue)
+                                .cornerRadius(10)
+                        }
+                        Spacer().frame(height: 25)
+                        Button(action: {
+                        }) {
+                            Text("Password")
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.white)
+                                .foregroundColor(.blue)
+                                .cornerRadius(10)
+                        }
+                        Text("Forgot your Password?")
+                        Spacer()
+                        Button(action: {
+                        }) {
+                            Text("Sign Up")
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.white)
+                                .foregroundColor(.blue)
+                                .cornerRadius(10)
+                        }
+                        HStack(alignment: .center) {
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(.gray)
+
+                            Text("or")
+                                .padding(.horizontal)
+
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(.gray)
+                        }
+                        HStack(alignment: .center) {
+                            Rectangle()
+                                .frame(width: 70, height: 70)
+                                .padding(25)
+                            Rectangle()
+                                .frame(width: 70, height: 70)
+                                .padding(25)
+                            Rectangle()
+                                .frame(width: 70, height: 70)
+                                .padding(25)
+                        }
+                        Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+                            .padding()
+                            .multilineTextAlignment(.center)
+                            .font(.caption)
+                    }
+                    .padding()
+                )
+                .edgesIgnoringSafeArea(.bottom)
+        }
+        .background(Color.black)
     }
 }
+
 
 struct LoginView: View {
     var body: some View {
@@ -133,11 +203,9 @@ struct LoginView: View {
     }
 }
 
-
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SignUpView()
     }
 }
 
